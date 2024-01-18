@@ -19,9 +19,9 @@ npm install
 ```javascript
 const START_ID = 1; // 시작 id
 const END_ID = 5; // 종료 id
-const interval = 10000; // 조회 주기 (ms 단위)
+const INTERVAL = 10000; // 조회 주기 (ms 단위)
 ```
-interval은 페이지 조회 마다 사이에 sleep 걸어두는 시간 (차단 방지 용도)
+INTERVAL은 페이지 조회 마다 사이에 sleep 걸어두는 시간 (차단 방지 용도)
 
 ### 실행
 ```bash

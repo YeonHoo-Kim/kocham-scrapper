@@ -5,11 +5,12 @@ const xlsx = require("xlsx");
 
 // 수정 부분
 const START_ID = 1; // 시작 id
-const END_ID = 5; // 종료 id
-const interval = 10000; // 조회 주기 (ms 단위)
+const END_ID = 2469; // 종료 id
+const INTERVAL = 0; // 조회 주기 (ms 단위)
 
 const BASE_URL = "http://www.kocham.kr/theme/inet/sub/detail.php?wr_id=";
 const HEADER = [
+  "id",
   "Company name",
   "General Director",
   "Type of business",
@@ -21,6 +22,7 @@ const HEADER = [
   "Number of staff",
   "Service",
 ];
+const EXCLUDED_HEADER = ["Logo"];
 
 async function start() {
   // node 환경에서 브라우저 접속
@@ -29,10 +31,12 @@ async function start() {
   const data = [HEADER];
 
   for (let i = START_ID; i <= END_ID; i++) {
-    const row = await getRowData(page, i);
+    const row = await getRowData('t', i);
     data.push(row);
-    printProgress(Math.round(((i - START_ID) / (END_ID - START_ID)) * 100));
-    await sleep(interval);
+    printProgress(
+      Math.round(((i - START_ID) / (END_ID - START_ID)) * 10000) / 100
+    );
+    await sleep(INTERVAL);
   }
 
   // 엑셀 추출
@@ -62,12 +66,14 @@ async function getRowData(page, id) {
   const $ = cheerio.load(content);
 
   // row data 추출
-  const rowData = [];
+  const rowData = [id];
   $("table.subtable_list tbody tr").each((_, row) => {
     $(row)
       .find("td")
       .each((_, cell) => {
-        rowData.push($(cell).text().trim());
+        if (!EXCLUDED_HEADER.includes($(cell).siblings("th").text().trim())) {
+          rowData.push($(cell).text().trim());
+        }
       });
   });
 
