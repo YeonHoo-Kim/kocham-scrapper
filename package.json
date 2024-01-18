@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "puppeteer": "^21.7.0"
+    "cheerio": "^1.0.0-rc.12",
+    "puppeteer": "^21.7.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
   }
 }
