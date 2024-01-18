@@ -31,7 +31,7 @@ async function start() {
   const data = [HEADER];
 
   for (let i = START_ID; i <= END_ID; i++) {
-    const row = await getRowData('t', i);
+    const row = await getRowData(page, i);
     data.push(row);
     printProgress(
       Math.round(((i - START_ID) / (END_ID - START_ID)) * 10000) / 100
